@@ -4,44 +4,47 @@
 		<title>Train Activity</title>
 		<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		
+
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="assets/css/style.css">
 
 		
 	</head>
 
 	<body>
-		<div id="schedule">
+
+		<h1 class="text-center h1"> Train Schedule </h1>
+		<div class="form-group">
 			
-		</div>
+		
 		<form id="add">
 
 			<label>Train Name</label>
-			<input type="text" name="train-name" id="train">
+			<input type="text" class="form-control" name="train-name" id="train" required>
 			<br>
 
 			<label>Destination</label>
-			<input type="text" name="destination" id="destination">
+			<input type="text" class="form-control" name="destination" id="destination" required>
 			<br>
 
-			<label>First Train Time (HH:mm - military time)</label>
-			<input type="text" name="arrival" id="arrival">
+			<label>First Train (HH:mm - military time)</label>
+			<input type="text" class="form-control" name="arrival" id="arrival" required>
 			<br>
 
 			<label>Frequency(min)</label>
-			<input type="text" name="frequency" id="freq">
+			<input type="text" class="form-control" name="frequency" id="freq" required>
 			<br>
 
-			<button id="submit">Submit</button>
+			<button id="submit" class="btn btn-primary">Submit</button>
 			
 		</form>
-
-		<table class="table">
-			<tbody id="trainTable">
-
-				<thread>
-					<tr>
-        				<th id="header">Train Activity </th>
-    				</tr>
+		</div>
+		
+		<div class="table-responsive">
+		<table class="table table-hover table-bordered">
+			<thead class="thead-inverse">
+				
 				<tr>
     				<th>Train Name</th>
     				<th>Destination</th>
@@ -49,13 +52,19 @@
     				<th>Next Arrival</th>
     				<th>Minutes Away</th>
   				</tr>
-  			</thread>
+  			</thead>
+  			<tbody id="trainTable">
 
 			</tbody>
 
 		</table>
+		</div>
+
+
 		
-		<script type="text/javascript" src="assets/javascript/logic3.js"></script>
+		
+		
 		<script type="text/javascript" src="assets/javascript/moment.js"></script>
+		<script type="text/javascript" src="assets/javascript/logic4.js"></script>
 	</body>
 </html>

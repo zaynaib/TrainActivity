@@ -1,3 +1,12 @@
+//TO DO
+
+//https://www.sitepoint.com/10-jquery-form-validation-plugins/
+//https://formden.com/blog/validate-contact-form-jquery
+
+
+//https://firebase.google.com/docs/auth/web/github-auth
+//https://github.com/settings/applications/599322
+
 //config the database
   var config = {
     apiKey: "AIzaSyAkfBdd77mEXLLM7HOZ1RL2z-D4mmLLwkw",
@@ -22,9 +31,22 @@ function getValues(event){
 	var destination = $("#destination").val().trim();
 	var startTrain =$("#arrival").val().trim();
 	var frequency =$("#freq").val().trim();
-	//var minutes =$("#min").val().trim();
-	//console.log(trainName,destination,arrival,frequency,arrival,minutes);
+	
 	console.log(startTrain);
+
+	//form vaildation
+	var re = /\d\d:\d\d/;
+	//console.log(/\d\d:\d\d/.test("04:00"));
+	//console.log(re.test(startTrain));
+	if(re.test(startTrain) === false){
+		console.log("red");
+		document.getElementById("arrival").style.borderColor = "red";
+
+	}
+	
+
+
+
 
 	//write to the firebase database
 	 database.ref().push({
@@ -32,7 +54,6 @@ function getValues(event){
         route: destination,
         freqTime: frequency,
         firstTrain: startTrain
-        //remainingTime:minutes
       });
 	
 
@@ -41,61 +62,35 @@ function getValues(event){
 	$("#destination").val('');
 	$("#freq").val('');
 	$("#arrival").val('');
-	//$("#min").val('');
 
 }
 
 
 //retrieve data from the firebase database
 database.ref().on("child_added",function(snapshot){
-	//console.log(snapshot.val().name);
 	
 	var trainLine = snapshot.val().name;
 	var trainRoute = snapshot.val().route;
 	var trainFreq = snapshot.val().freqTime;
 	var trainArrival = snapshot.val().firstTrain;
 
-	/*
-	console.log(trainLine);
-	console.log(trainRoute);
-	console.log(trainFreq);
-	console.log(trainArrival);
-	*/
 
-	// First Time (pushed back 1 year to make sure it comes before current time)
-    var trainArrivalConverted = moment(trainArrival, "hh:mm").subtract(1, "years");
-    console.log(trainArrivalConverted);
-
-    // Current Time
+    var trainArrivalConverted = moment(trainArrival, "hh:mm").subtract(1, "days");
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    // Difference between the times
     var diffTime = moment().diff(moment(trainArrivalConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
-
-    // Time apart (remainder)
     var tRemainder = diffTime % trainFreq;
-    console.log(tRemainder);
-
-    // Minute Until Train
     var tMinutesTillTrain = trainFreq - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-    //do something with NAN
-    //form validation do not allow the user to leave anything blank give an angry warning
-    //logic statement
-
+  
 
         // Add each train's data into the table
   $("tbody").append("<tr><td>" + trainLine + "</td>"+" <td>" + trainRoute + "</td>"+
   	" <td>" + trainFreq + "</td>"+ " <td>" + trainArrival + "</td>"+" <td>" + tMinutesTillTrain + "</td>"+ "</tr>");
 
-
+  	
+  	var add = $("<button id='add'>");
+  	var del = $("<button id='delete'>");
 
 	})
 
